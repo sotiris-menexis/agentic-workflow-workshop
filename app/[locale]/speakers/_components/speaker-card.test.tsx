@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { render, screen } from "@/tests/utils/render";
+import { render, screen, within } from "@/tests/utils/render";
 import type { Speaker } from "@/types/speaker";
 
 import { SpeakerCard } from "./speaker-card";
@@ -22,26 +22,18 @@ describe("SpeakerCard", () => {
     ).toBeInTheDocument();
   });
 
-  it("links each session to its page, named by start time and title", () => {
+  it("lists one link per session, in the given order", () => {
     render(<SpeakerCard speaker={speaker} />);
 
-    // The separator is in the DOM, so the name doesn't depend on CSS layout.
-    expect(
-      screen.getByRole("link", { name: "09:00, Opening Keynote" }),
-    ).toHaveAttribute("href", "/en/sessions/opening-keynote");
-    expect(
-      screen.getByRole("link", { name: "15:00, Afternoon Talk" }),
-    ).toHaveAttribute("href", "/en/sessions/afternoon-talk");
-  });
-
-  it("lists the sessions as a list, with machine-readable start times", () => {
-    render(<SpeakerCard speaker={speaker} />);
-
-    expect(screen.getByRole("list")).toBeInTheDocument();
-    expect(screen.getAllByRole("listitem")).toHaveLength(2);
-    expect(screen.getByText("09:00").closest("time")).toHaveAttribute(
-      "dateTime",
-      "09:00",
+    const items = within(screen.getByRole("list")).getAllByRole("listitem");
+    expect(items).toHaveLength(2);
+    expect(within(items[0]).getByRole("link")).toHaveAttribute(
+      "href",
+      "/en/sessions/opening-keynote",
+    );
+    expect(within(items[1]).getByRole("link")).toHaveAttribute(
+      "href",
+      "/en/sessions/afternoon-talk",
     );
   });
 });

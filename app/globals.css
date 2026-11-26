@@ -13,6 +13,8 @@
   --accent-muted: #a78bfa;
   /* Accent for small text: --accent-hex is under 4.5:1 on dark cards. */
   --accent-text: #a78bfa;
+  /* Resting underline for links inside cards. */
+  --link-underline: rgba(255, 255, 255, 0.16);
   --success-hex: #22c55e;
   --warning-hex: #f59e0b;
   --error-hex: #ef4444;
@@ -34,6 +36,7 @@
 
   --accent-hex: #6d4aff;
   --accent-text: #6d4aff;
+  --link-underline: rgba(0, 0, 0, 0.16);
 }
 
 * {

@@ -16,7 +16,12 @@ export function getSpeakersFromSessions(sessions: Session[]): Speaker[] {
 
   for (const { id, title, startTime, speaker } of sessions) {
     const name = speaker.trim();
-    if (!name || NON_SPEAKER_NAMES.has(name)) continue;
+    if (!name) {
+      // Unexpected data: this session would otherwise vanish from the page silently.
+      console.warn("[speakers] skipped session with a blank speaker:", id);
+      continue;
+    }
+    if (NON_SPEAKER_NAMES.has(name)) continue;
 
     const entry = byName.get(name) ?? { name, sessions: [] };
     entry.sessions.push({ id, title, startTime });

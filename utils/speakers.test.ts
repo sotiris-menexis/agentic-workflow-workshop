@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import type { Session } from "@/types/session";
 
@@ -59,6 +59,46 @@ describe("getSpeakersFromSessions", () => {
     expect(speakers.map((speaker) => speaker.name)).toEqual([
       "Marta Fernandez",
     ]);
+  });
+
+  it("groups names that differ only by surrounding whitespace", () => {
+    const speakers = getSpeakersFromSessions([
+      session({ id: "s1", speaker: "Marta Fernandez" }),
+      session({ id: "s2", speaker: "  Marta Fernandez " }),
+    ]);
+
+    expect(speakers).toHaveLength(1);
+    expect(speakers[0].name).toBe("Marta Fernandez");
+    expect(speakers[0].sessions).toHaveLength(2);
+  });
+
+  it("skips a session with a blank speaker and warns about it", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    const speakers = getSpeakersFromSessions([
+      session({ id: "keynote", speaker: "Marta Fernandez" }),
+      session({ id: "mystery", speaker: "   " }),
+    ]);
+
+    expect(speakers.map((speaker) => speaker.name)).toEqual([
+      "Marta Fernandez",
+    ]);
+    expect(warn).toHaveBeenCalledWith(
+      "[speakers] skipped session with a blank speaker:",
+      "mystery",
+    );
+    warn.mockRestore();
+  });
+
+  it("does not warn about the closing panel's placeholder", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    getSpeakersFromSessions([
+      session({ id: "closing-panel", speaker: "Full speaker lineup" }),
+    ]);
+
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 
   it("returns nothing for no sessions", () => {
