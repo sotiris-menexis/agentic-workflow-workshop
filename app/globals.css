@@ -11,6 +11,8 @@
 
   --accent-hex: #7c5cff;
   --accent-muted: #a78bfa;
+  /* Accent for small text: --accent-hex is under 4.5:1 on dark cards. */
+  --accent-text: #a78bfa;
   --success-hex: #22c55e;
   --warning-hex: #f59e0b;
   --error-hex: #ef4444;
@@ -31,6 +33,7 @@
   --text-muted: #8b92a3;
 
   --accent-hex: #6d4aff;
+  --accent-text: #6d4aff;
 }
 
 * {

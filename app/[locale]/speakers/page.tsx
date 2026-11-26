@@ -22,7 +22,7 @@ export default async function SpeakersPage({
       <PageHeading title={t("title")}>{t("intro")}</PageHeading>
 
       {speakers.length === 0 ? (
-        <Text color="var(--text-muted)">{t("empty")}</Text>
+        <Text color="var(--text-secondary)">{t("empty")}</Text>
       ) : (
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="4">
           {speakers.map((speaker) => (

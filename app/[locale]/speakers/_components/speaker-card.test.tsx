@@ -22,14 +22,26 @@ describe("SpeakerCard", () => {
     ).toBeInTheDocument();
   });
 
-  it("links each session to its page, with its start time and title", () => {
+  it("links each session to its page, named by start time and title", () => {
     render(<SpeakerCard speaker={speaker} />);
 
-    const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(2);
-    expect(links[0]).toHaveAttribute("href", "/en/sessions/opening-keynote");
-    expect(links[0]).toHaveTextContent("09:00");
-    expect(links[0]).toHaveTextContent("Opening Keynote");
-    expect(links[1]).toHaveAttribute("href", "/en/sessions/afternoon-talk");
+    // The separator is in the DOM, so the name doesn't depend on CSS layout.
+    expect(
+      screen.getByRole("link", { name: "09:00, Opening Keynote" }),
+    ).toHaveAttribute("href", "/en/sessions/opening-keynote");
+    expect(
+      screen.getByRole("link", { name: "15:00, Afternoon Talk" }),
+    ).toHaveAttribute("href", "/en/sessions/afternoon-talk");
+  });
+
+  it("lists the sessions as a list, with machine-readable start times", () => {
+    render(<SpeakerCard speaker={speaker} />);
+
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+    expect(screen.getByText("09:00").closest("time")).toHaveAttribute(
+      "dateTime",
+      "09:00",
+    );
   });
 });
