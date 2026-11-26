@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.4.0] — 2026-11-26
+
+### Features
+
+- Speakers page (`/en/speakers`, `/es/speakers`): one card per speaker,
+  grouped from the session schedule and sorted by name, each listing their
+  sessions in start-time order; responsive 1/2/3-column grid with an empty
+  state, and a Speakers / Ponentes link in the site nav (#4, refs #1)
+
+### Accessibility
+
+- Speakers page meets WCAG AA contrast: new `--accent-text` and
+  `--link-underline` tokens in both themes, underlined session links,
+  semantic `<time>` start times and list roles for VoiceOver
+
+## Test Suite
+
+| Suite          | Status     |
+| -------------- | ---------- |
+| ESLint         | ⏳ pending |
+| Type-check     | ⏳ pending |
+| Unit tests     | ⏳ pending |
+| Build (Vercel) | ⏳ pending |
+
 ## [0.3.2] — 2026-11-26
 
 ### Maintenance
