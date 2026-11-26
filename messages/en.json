@@ -15,6 +15,7 @@
   },
   "SpeakersPage": {
     "title": "Speakers",
-    "intro": "Who is speaking at React Alicante, and when."
+    "intro": "Who is speaking at React Alicante, and when.",
+    "empty": "No speakers have been announced yet."
   }
 }

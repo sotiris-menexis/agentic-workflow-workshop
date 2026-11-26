@@ -15,6 +15,7 @@
   },
   "SpeakersPage": {
     "title": "Ponentes",
-    "intro": "Quién habla en React Alicante, y cuándo."
+    "intro": "Quién habla en React Alicante, y cuándo.",
+    "empty": "Todavía no se han anunciado ponentes."
   }
 }
